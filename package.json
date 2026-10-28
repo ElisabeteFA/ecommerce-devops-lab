@@ -1,0 +1,12 @@
+{
+  "name": "ecommerce-devops-lab",
+  "version": "1.0.0",
+  "description": "API simples de e-commerce para demonstrar praticas DevOps",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
