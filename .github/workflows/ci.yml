@@ -1,0 +1,39 @@
+name: CI Pipeline - Ecommerce API
+
+# Dispara essa automação sempre que houver um push ou pull request na branch principal (main)
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Baixa o código do seu repositório para o servidor do GitHub
+    - name: Checkout do Código
+      uses: actions/checkout@v4
+
+    # 2. Configura o ambiente Node.js no servidor do GitHub
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # 3. Instala as dependências e roda testes (se houver)
+    - name: Instalar Dependências
+      run: npm install
+
+    # 4. Configura o Docker no ambiente do GitHub
+    - name: Configurar Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # 5. Testa se o Dockerfile consegue construir a imagem sem erros
+    - name: Construir a Imagem Docker (Build Test)
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: false # Não envia para o Docker Hub ainda, apenas testa o build
+        tags: ecommerce-api:test
